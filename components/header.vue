@@ -14,16 +14,40 @@
            </el-row>
      
      <!-- 登录跳转 -->
-     <div>
+     <div v-if="!$store.state.user.userInfo.token">
         <nuxt-link to="/user/login">登录 / 注册</nuxt-link>
      </div>
+    <!-- 设置登录成功后显示用户名和头像及下拉菜单的个人用户和退出 -->
+    <el-dropdown v-else>
+  <span class="el-dropdown-link">
+      <!-- 头像和昵称 -->
+      <img :src="`${$axios.defaults.baseURL}${$store.state.user.userInfo.user.defaultAvatar}`" alt="">
+    {{$store.state.user.userInfo.user.nickname}}<i class="el-icon-arrow-down el-icon--right"></i>
+  </span>
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>个人用户</el-dropdown-item>
+    <!-- click.native 给第三方组件添加事件需要加上native -->
+    <el-dropdown-item @click.native="handleLogout">退出</el-dropdown-item>
+  </el-dropdown-menu>
+</el-dropdown>
      </el-row>
   </div>
 </template>
 
 <script>
 export default {
-
+    // 退出
+    methods:{
+        handleLogout(){
+        this.$store.commit("user/clearUserInof")
+        this.$message.success('退出成功')
+        }
+    },
+    // 组件加载
+mounted(){
+    // console.log(this.$store,213465)
+    // console.log(this.$store.state.user.userInfo.token,123465)
+}
 }
 </script>
 
@@ -77,6 +101,18 @@ export default {
             }
         }
    }
-</style>>
 
+    // 头像样式
+    .el-dropdown-link img{
+        width: 36px;
+        height:36px;
+        border-radius: 50%;
+        vertical-align: middle;
+        box-sizing: border-box;
+        border:2px #fff solid;
+        &:hover{
+            border:2px #409eff solid;
+        }
+    }
 </style>
+
