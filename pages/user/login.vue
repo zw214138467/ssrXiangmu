@@ -18,23 +18,27 @@
         <LoginForm v-if="currentTab == 0"/>
 
         <!-- 注册功能组件 -->
-        <!-- <RegisterForm v-if="currentTab == 1"/> -->
+        <RegisterForm v-if="currentTab == 1"/>
       </div>
     </el-row>
   </div>
 </template>
 
 <script>
+// 引入登录功能组件
 import LoginForm from '@/components/user/loginForm'
+// 引入注册功能组件
+import RegisterForm from '@/components/user/registerForm'
 export default {
   data() {
     return { 
       currentTab: 0 
       };
   },
-  // 引入登录账号和密码组件
+  // 引入登录账号和密码组件，和注册组件
   components:{
-    LoginForm
+    LoginForm,
+    RegisterForm
   },
   methods: {
     handleChangeTab(index) {

@@ -61,7 +61,7 @@ export default {
           })
           .catch(err=>{
             // console.log(err,res)
-            this.$message.error('请输入正确的账号和密码')
+            // this.$message.error('请输入正确的账号和密码')
           })
         } else {
             this.$message.error('请输入账号和密码')          
