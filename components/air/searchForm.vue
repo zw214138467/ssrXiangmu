@@ -27,6 +27,7 @@
           placeholder="请搜索出发城市"
           @select="handleDepartSelect"
           class="el-autocomplete"
+          @blur="clearDepartCity"
         ></el-autocomplete>
       </el-form-item>
 
@@ -37,6 +38,7 @@
           placeholder="请搜索到达城市"
           @select="handleDestSelect"
           class="el-autocomplete"
+          @blur="shishijiao"
         ></el-autocomplete>
       </el-form-item>
       <el-form-item label="出发时间">
@@ -72,6 +74,12 @@ export default {
         destCode: "",
         departDate: ""
       },
+      temp: {
+        departCity: "", // 出发城市
+        departCode: "", // 出发城市代码
+        destCity: "",
+        destCode: ""
+      },
       // tab栏
       tabs: [
         { icon: "iconfont icondancheng", name: "单程" },
@@ -82,9 +90,10 @@ export default {
   },
   methods: {
     //   尝试下失焦
-    //     shishijiao(value, cb){
-    //       console.log(value,cb)
-    //   },
+    shishijiao() {
+      this.form.destCity = this.temp.destCity;
+      this.form.destCode = this.temp.destCode;
+    },
     // 点击切换tab栏效果
     handleSearchTab(index) {
       if (index === 1) {
@@ -119,11 +128,18 @@ export default {
           // console.log(v.value)
         });
         // 设置不点击下拉的值的时候自动默认为第一个
-        this.form.departCity = newData[0].value;
-        this.form.departCode = newData[0].sort;
+        // this.form.departCity = newData[0].value;
+        // this.form.departCode = newData[0].sort;
+        this.temp.departCity = newData[0].value;
+        this.temp.departCode = newData[0].sort;
         // 显示下拉菜单列表中
         cb(newData);
       });
+    },
+    // 解决输入广字自动弹出州字的BUG
+    clearDepartCity(){
+      this.form.departCity = this.temp.departCity ? this.temp.departCity : "";
+        this.form.departCode = this.temp.departCode ? this.temp.departCode : "";
     },
     // 目标城市输入框获得焦点时触发
     // value 是选中的值，cb是回调函数，接收要展示的列表
@@ -151,8 +167,8 @@ export default {
           newData.push(v);
         });
         // 设置不点击下拉的值的时候自动默认为第一个
-        this.form.destCity = newData[0].value;
-        this.form.destCode = newData[0].sort;
+        this.temp.destCity = newData[0].value;
+        this.temp.destCode = newData[0].sort;
 
         cb(newData);
       });
@@ -179,14 +195,14 @@ export default {
     },
     // 触发和目标城市切换时触发
     handleReverse() {
-        // 解析
+      // 解析
       const { departCity, departCode, destCity, destCode } = this.form;
       // 交叉赋值
-        this.form.departCity = destCity;
-        this.form.departCode = destCode;
+      this.form.departCity = destCity;
+      this.form.departCode = destCode;
 
-        this.form.destCity = departCity;
-        this.form.destCode = departCode
+      this.form.destCity = departCity;
+      this.form.destCode = departCode;
     },
     // 提交表单是触发
     handleSubmit() {

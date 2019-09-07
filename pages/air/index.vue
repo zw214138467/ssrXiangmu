@@ -75,7 +75,7 @@ export default {
     this.$axios({
       url:'/airs/sale',
     }).then(res=>{
-      console.log(res)
+      // console.log(res)
       this.sales=res.data.data
     })
   }
