@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="5" class="price">￥1345</el-col>
             <el-col :span="3" class="choose-button">
-              <el-button type="warning" size="mini">选定</el-button>
+              <el-button type="warning" size="mini" @click="handleChoose(item.seat_xid)">选定</el-button>
               <p>剩余：{{ item.discount }}</p>
             </el-col>
           </el-row>
@@ -75,6 +75,18 @@ export default {
       // 默认是空数组
       // 如果调用组件不传值，采用default的默认值
       default: {}
+    }
+  },
+  methods: {
+    //  选定跳转付款页
+    handleChoose(seat_xid) {
+      // console.log(this.data.id);
+      this.$router.push({
+        path:"/air/order",
+        query:{
+            id:this.data.id,seat_xid
+        }
+      })
     }
   },
   // computed和data一样都可以在模板中渲染，区别在computed的属性值是一个函数，

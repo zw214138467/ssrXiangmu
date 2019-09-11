@@ -52,6 +52,9 @@ export default {
             // 如何调用mutations下的setUserInfo的方法 commit
            // commit接受两个参数，第一个mutations参数是方法名，第二个参数数据
             this.$store.commit("user/setUserInfo",res.data)
+
+            // 在这里设置返回上一页
+            this.$router.back()
             this.$message({
               type:'success',
               message:'登录成功'

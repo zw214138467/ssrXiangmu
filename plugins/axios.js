@@ -5,7 +5,8 @@ import {Message} from 'element-ui';
 
 // export default 函数是nuxt插件的固定的格式
 // 函数有一个参数，这个参数是nuxt对象
-export default ({$axios})=>{
+// redirect重定向
+export default ({$axios ,redirect})=>{
 // 错误拦截，onError
 $axios.onError(res=>{
 // 返回的res是一个错误的对象，Error对象下都有一个response的属性可以访问错误的信息
@@ -15,5 +16,11 @@ if(statusCode ===400){
     // Message=this.$message 但是上面要引入才行import {Message} from 'element-ui';
     Message.error(message)
 }
+if(statusCode===401 || statusCode===403){
+    Message.error('请登录')
+    // 跳转到登录页
+    redirect("/user/login")
+}
 })
+
 }

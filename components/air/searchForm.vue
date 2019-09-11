@@ -222,6 +222,12 @@ export default {
         this.$alert("请输入出发的日期", "提示");
         return;
       }
+      // 把本地存储先拿出来
+      const arr =JSON.parse(localStorage.getItem("airs")) || []
+      // 然后把搜索的数据添加进arr里面
+      arr.push(this.form)
+      // 然后在存入本地数据库里面
+      localStorage.setItem("airs",JSON.stringify(arr))
       // 搜索成功后跳转到机票页面
       this.$router.push({
         path: "/air/flights",
